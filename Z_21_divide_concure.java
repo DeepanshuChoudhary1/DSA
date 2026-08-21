@@ -147,53 +147,58 @@ public class Z_21_divide_concure {
     }
 
     // <---------------------problem Questins pdf------------>
+    // private static int inverseCount = 0;
 
-    public static void mergeSorts(String[] arr, int si, int ei) {
+    public static int mergeSorts(int arr[], int si, int ei) {
+
         if (si >= ei) {
-            return;
+            return 0;
         }
-
         int mid = si + (ei - si) / 2;
-        mergeSorts(arr, si, mid);
-        mergeSorts(arr, mid + 1, ei);
-        merges(arr, si, ei, mid);
 
+        int l = mergeSorts(arr, si, mid);
+        int r = mergeSorts(arr, mid + 1, ei);
+        int count = merges(arr, si, ei, mid);
+        System.out.println("(2) the left = " + l + " right = " + r + " count= " + count);
+        return l + r + count;
     }
 
-    public static void merges(String[] arr, int si, int ei, int mid) {
+    public static int merges(int[] arr, int si, int ei, int mid) {
+        System.out.println("in merge fun the si " + si + " ei = " + ei + " mid= " + mid);
         int i = si;
         int j = mid + 1;
         int k = 0;
-        String[] temp = new String[ei - si + 1];
-        while (i <= mid && j <= ei) {
-            if (arr[i].compareTo(arr[j]) <= 0) {
-                temp[k] = arr[i];
-                i++;
-            } else {
+        int count = 0;
+        int[] temp = new int[ei - si + 1];
 
+        while (i <= mid && j <= ei) {
+            if (arr[i] > arr[j]) {
                 temp[k] = arr[j];
+
                 j++;
+                count = (mid - i + 1);
+            } else {
+                temp[k] = arr[i];
+
+                i++;
 
             }
             k++;
-            // String s = arr[i].compareTo(arr[j]);
-            // temp[k] =
-
-            // j++;
-
-            // k++;
         }
         while (i <= mid) {
+
             temp[k++] = arr[i++];
+
         }
         while (j <= ei) {
-            temp[k++] = arr[j++];
-        }
 
+            temp[k++] = arr[j++];
+
+        }
         for (i = si, k = 0; k < temp.length; i++, k++) {
             arr[i] = temp[k];
         }
-
+        return count;
     }
 
     public static void quicksorts(int arr[], int si, int ei) {
@@ -268,13 +273,16 @@ public class Z_21_divide_concure {
 
         int[] arr1 = { 4, 5, 6, 7, 0, 1, 2 };
         int[] arr2 = { 6, 7, 1, 2, 3, 4, 5 };
-        System.out.println(findElementInSortedReverseArray(arr2, 0, arr2.length - 1, 1));
+        // System.out.println(findElementInSortedReverseArray(arr2, 0, arr2.length - 1,
+        // 1));
 
         quicksorts(arr1, 0, arr1.length - 1);
 
-        String[] arr3 = { "sun", "sun", "earth", "earth", "mars", "mercury" };
-        mergeSorts(arr3, 0, arr3.length - 1);
-        printStrArr(arr3);
+        // String[] arr3 = { "sun", "sun", "earth", "earth", "mars", "mercury" };
+        // mergeSorts(arr3, 0, arr3.length - 1);
+        int[] ar = { 4, 2, 5, 1, 0 };
+        System.out.println("total sorting step count is  = " + mergeSorts(ar, 0, ar.length - 1));
+        printArr(ar);
         int[] arr4 = { 1, 1, 2, 2, 2, 2 };
         System.out.println("mejurity elemnt is " + getMajurityElemnt(arr4));
 
